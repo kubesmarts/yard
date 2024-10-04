@@ -18,25 +18,20 @@
  */
 package org.kie.yard.api.model;
 
-import jakarta.json.bind.annotation.JsonbSubtype;
-import jakarta.json.bind.annotation.JsonbTypeInfo;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlSubtype;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlTypeInfo;
+import org.kie.j2cl.tools.yaml.mapper.api.YAMLSerializer;
+import org.kie.j2cl.tools.yaml.mapper.api.internal.ser.YAMLSerializationContext;
+import org.kie.j2cl.tools.yaml.mapper.api.node.YamlMapping;
+import org.kie.j2cl.tools.yaml.mapper.api.node.YamlSequence;
 
-@YamlTypeInfo(
-        key = "type",
-        value = {
-                @YamlSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @YamlSubtype(alias = "LiteralExpression", type = LiteralExpression.class),
-                @YamlSubtype(alias = "Rules", type = RuleExpression.class)
-        })
-@JsonbTypeInfo(
-        key = "type",
-        value = {
-                @JsonbSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @JsonbSubtype(alias = "LiteralExpression", type = LiteralExpression.class)
-        }
-)
-public interface DecisionLogic {
+public class Pattern_YamlSerializerImpl
+        implements YAMLSerializer<Pattern> {
+    @Override
+    public void serialize(YamlMapping yamlMapping, String s, Pattern when, YAMLSerializationContext yamlSerializationContext) {
 
+    }
+
+    @Override
+    public void serialize(YamlSequence yamlSequence, Pattern when, YAMLSerializationContext yamlSerializationContext) {
+
+    }
 }

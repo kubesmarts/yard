@@ -1,0 +1,55 @@
+specVersion: alpha
+kind: YaRD
+name: 'BasePrice'
+inputs:
+  - name: Persons
+    type: Store
+elements:
+  - name: Kids by parent initials
+    type: Decision
+    logic:
+      type: Rules
+      result: Map
+      rules:
+        - when:
+            - groupBy:
+                  given: $p
+                  from: Persons
+                  having:
+                    - age >= 18
+              grouping:
+                  by: $p.name[0]
+                  as: $initial
+              accumulator:
+                  function: sum
+                  parameter: $p.kids
+                  as: $kidCount
+                  filter: $kidCount == 0
+          then:
+            result:
+              - put:
+                  key: $initial
+                  value: $kidCount
+  - name: Parent count by decade
+    type: Decision
+    logic:
+      type: Rules
+      result: Map
+      rules:
+        - when:
+            - groupBy:
+                given: $p
+                from: Persons
+                having:
+                  - kids > 0
+              grouping:
+                by: $p.age - ( $p.age % 10 )
+                as: $decade
+              accumulator:
+                function: count
+                as: $amountOfParentsForDecade
+          then:
+            result:
+              - put:
+                  key: $decade
+                  value: $amountOfParentsForDecade

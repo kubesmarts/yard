@@ -1,0 +1,57 @@
+specVersion: alpha
+kind: YaRD
+name: 'BasePrice'
+inputs:
+  - name: Current Time
+    type: String
+  - name: Tickets
+    type: Store
+elements:
+  - name: Group week old tickets by type
+    type: Decision
+    logic:
+      type: Rules
+      result: Map
+      rules:
+        - when:
+            - groupBy:
+                  given: $t
+                  from: Tickets
+                  having:
+                    - |
+                        Duration.between(
+                               date(createdAt).atStartOfDay(), 
+                               date(`Current Time`).atStartOfDay()).toDays()
+                         <= 7
+              grouping:
+                by: $t.priority
+                as: $priority
+              accumulator:
+                  function: count
+                  as: $count
+          then:
+            result:
+              - put:
+                  key: $priority
+                  value: $count
+  - name: All Tickets group by Date
+    type: Decision
+    logic:
+      type: Rules
+      result: TreeMap
+      rules:
+        - when:
+            - groupBy:
+                given: $t
+                from: Tickets
+              grouping:
+                by: date($t.createdAt)
+                as: $createdAtDate
+              accumulator:
+                function: count
+                as: $count
+          then:
+            result:
+              - put:
+                  key: $createdAtDate
+                  value: $count

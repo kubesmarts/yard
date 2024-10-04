@@ -18,25 +18,30 @@
  */
 package org.kie.yard.api.model;
 
-import jakarta.json.bind.annotation.JsonbSubtype;
-import jakarta.json.bind.annotation.JsonbTypeInfo;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlSubtype;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlTypeInfo;
+import org.kie.j2cl.tools.yaml.mapper.api.annotation.YAMLMapper;
 
-@YamlTypeInfo(
-        key = "type",
-        value = {
-                @YamlSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @YamlSubtype(alias = "LiteralExpression", type = LiteralExpression.class),
-                @YamlSubtype(alias = "Rules", type = RuleExpression.class)
-        })
-@JsonbTypeInfo(
-        key = "type",
-        value = {
-                @JsonbSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @JsonbSubtype(alias = "LiteralExpression", type = LiteralExpression.class)
-        }
-)
-public interface DecisionLogic {
+import java.util.List;
 
+@YAMLMapper
+public class RuleExpression implements DecisionLogic {
+
+    private String result;
+
+    private List<YamlRule> rules;
+
+    public List<YamlRule> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<YamlRule> rules) {
+        this.rules = rules;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 }

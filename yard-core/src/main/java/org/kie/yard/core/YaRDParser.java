@@ -28,6 +28,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class YaRDParser {
     static YaRDParser fromModel(final YaRD model) throws IOException {
@@ -64,7 +65,7 @@ public class YaRDParser {
     }
 
     private static final Logger LOG = LoggerFactory.getLogger(YaRDParser.class);
-    private final YaRDDefinitions definitions = new YaRDDefinitions(new HashMap<>(), new ArrayList<>(), new HashMap<>());
+    private final YaRDDefinitions definitions = new YaRDDefinitions(new HashMap<>(), new HashMap<>(), new ArrayList<>(), new HashMap<>());
     private final YaRD model;
 
     private YaRDParser(final YaRD model) {
@@ -97,11 +98,14 @@ public class YaRDParser {
         }
     }
 
-    private Firable createDecisionLogic(String nameString, DecisionLogic decisionLogic) {
+    private Firable createDecisionLogic(final String name,
+                                        final DecisionLogic decisionLogic) {
         if (decisionLogic instanceof org.kie.yard.api.model.DecisionTable decisionTable) {
-            return new SyntheticRuleUnitWrapper(new DTableUnitBuilder(definitions, nameString, decisionTable).build());
+            return new SyntheticRuleUnitWrapper(new DTableUnitBuilder(definitions, name, decisionTable).build());
         } else if (decisionLogic instanceof org.kie.yard.api.model.LiteralExpression literalExpression) {
-            return new LiteralExpressionBuilder(model.getExpressionLang(), definitions, nameString, literalExpression).build();
+            return new LiteralExpressionBuilder(model.getExpressionLang(), definitions, name, literalExpression).build();
+        } else if (decisionLogic instanceof RuleExpression ruleExpression) {
+            return new SyntheticRuleUnitWrapper(new RuleExpressionBuilder(definitions, name, ruleExpression).build());
         } else {
             throw new UnsupportedOperationException("Not implemented.");
         }
@@ -113,7 +117,11 @@ public class YaRDParser {
             String nameString = hi.getName();
             @SuppressWarnings("unused")
             Class<?> typeRef = processType(hi.getType());
-            definitions.inputs().put(nameString, DataSource.createSingleton());
+            if(Objects.equals("Store", hi.getType())) {
+                definitions.inputs().put(nameString, DataSource.createStore());
+            } else {
+                definitions.inputs().put(nameString, DataSource.createSingleton());
+            }
         }
     }
 

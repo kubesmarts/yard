@@ -26,6 +26,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.drools.model.Index;
+import org.drools.ruleunits.api.DataSource;
 import org.drools.ruleunits.api.SingletonStore;
 import org.drools.ruleunits.dsl.SyntheticRuleUnit;
 import org.drools.ruleunits.dsl.SyntheticRuleUnitBuilder;
@@ -59,7 +60,7 @@ public class DTableUnitBuilder {
     public SyntheticRuleUnit build() {
 
         final SyntheticRuleUnitBuilder unit = SyntheticRuleUnitBuilder.build(name);
-        for (Map.Entry<String, SingletonStore<Object>> e : definitions.inputs().entrySet()) {
+        for (Map.Entry<String, DataSource<Object>> e : definitions.inputs().entrySet()) {
             unit.registerDataSource(e.getKey(), e.getValue(), Object.class);
         }
         final StoreHandle<Object> result = StoreHandle.empty(Object.class);
@@ -71,7 +72,7 @@ public class DTableUnitBuilder {
                 for (int idx = 0; idx < inputs.size(); idx++) {
                     final RuleCell ruleCell = parseGenericRuleCell(ruleDefinition, idx);
                     if (ruleCell.value != null) {
-                        final SingletonStore<Object> dataSource = definitions.inputs().get(inputs.get(idx));
+                        final DataSource<Object> dataSource = definitions.inputs().get(inputs.get(idx));
 
                         rule.on(dataSource).filter(ruleCell.idxtype, ruleCell.value);
                     }
