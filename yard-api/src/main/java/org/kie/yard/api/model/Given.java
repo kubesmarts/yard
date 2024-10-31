@@ -18,25 +18,34 @@
  */
 package org.kie.yard.api.model;
 
-import jakarta.json.bind.annotation.JsonbSubtype;
-import jakarta.json.bind.annotation.JsonbTypeInfo;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlSubtype;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlTypeInfo;
+import java.util.List;
 
-@YamlTypeInfo(
-        key = "type",
-        value = {
-                @YamlSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @YamlSubtype(alias = "LiteralExpression", type = LiteralExpression.class),
-                @YamlSubtype(alias = "Rules", type = RuleExpression.class)
-        })
-@JsonbTypeInfo(
-        key = "type",
-        value = {
-                @JsonbSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @JsonbSubtype(alias = "LiteralExpression", type = LiteralExpression.class)
-        }
-)
-public interface DecisionLogic {
+public class Given implements Pattern {
+    private String given;
+    private String from;
+    private List<String> having;
 
+    public String getGiven() {
+        return given;
+    }
+
+    public void setGiven(String given) {
+        this.given = given;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public List<String> getHaving() {
+        return having;
+    }
+
+    public void setHaving(List<String> having) {
+        this.having = having;
+    }
 }

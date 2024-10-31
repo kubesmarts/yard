@@ -39,7 +39,7 @@ public class InsuranceBasePriceTest
                 """;
         Map<String, Object> outputJSONasMap = evaluate(CTX, FILE_NAME);
         assertThat(outputJSONasMap).hasFieldOrPropertyWithValue("Base price", 500);
-        assertThat(outputJSONasMap).hasFieldOrPropertyWithValue("Downpayment", 50);
+        assertThat(outputJSONasMap).hasFieldOrPropertyWithValue("Downpayment", 50.0);
     }
 
     @Test
@@ -52,6 +52,6 @@ public class InsuranceBasePriceTest
                 """;
         Map<String, Object> outputJSONasMap = evaluate(CTX, FILE_NAME);
         assertThat(outputJSONasMap).hasFieldOrPropertyWithValue("Base price", 1000);
-        assertThat(outputJSONasMap).hasFieldOrPropertyWithValue("Downpayment", 70);
+        assertThat(outputJSONasMap).hasFieldOrPropertyWithValue("Downpayment", 70.0);
     }
 }

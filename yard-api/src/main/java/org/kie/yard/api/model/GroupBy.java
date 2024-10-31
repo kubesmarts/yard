@@ -18,25 +18,34 @@
  */
 package org.kie.yard.api.model;
 
-import jakarta.json.bind.annotation.JsonbSubtype;
-import jakarta.json.bind.annotation.JsonbTypeInfo;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlSubtype;
-import org.kie.j2cl.tools.yaml.mapper.api.annotation.YamlTypeInfo;
+public class GroupBy implements Pattern {
+    private Given given;
 
-@YamlTypeInfo(
-        key = "type",
-        value = {
-                @YamlSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @YamlSubtype(alias = "LiteralExpression", type = LiteralExpression.class),
-                @YamlSubtype(alias = "Rules", type = RuleExpression.class)
-        })
-@JsonbTypeInfo(
-        key = "type",
-        value = {
-                @JsonbSubtype(alias = "DecisionTable", type = DecisionTable.class),
-                @JsonbSubtype(alias = "LiteralExpression", type = LiteralExpression.class)
-        }
-)
-public interface DecisionLogic {
+    private Grouping grouping;
 
+    private Accumulator accumulator;
+
+    public Given getGiven() {
+        return given;
+    }
+
+    public void setGiven(Given given) {
+        this.given = given;
+    }
+
+    public Grouping getGrouping() {
+        return grouping;
+    }
+
+    public void setGrouping(Grouping grouping) {
+        this.grouping = grouping;
+    }
+
+    public Accumulator getAccumulators() {
+        return accumulator;
+    }
+
+    public void setAccumulators(Accumulator accumulator) {
+        this.accumulator = accumulator;
+    }
 }

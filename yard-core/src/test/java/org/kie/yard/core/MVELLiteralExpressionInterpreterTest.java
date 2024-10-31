@@ -38,7 +38,7 @@ public class MVELLiteralExpressionInterpreterTest {
         final Map<String, StoreHandle<Object>> outputs = new HashMap<>();
         outputs.put("C", StoreHandle.of(5));
         outputs.put("sum", StoreHandle.empty(Object.class));
-        yardDefinitions = new YaRDDefinitions(Collections.emptyMap(), Collections.EMPTY_LIST, outputs);
+        yardDefinitions = new YaRDDefinitions(Collections.emptyMap(), Collections.emptyMap(), Collections.EMPTY_LIST, outputs);
 
     }
 

@@ -1,0 +1,31 @@
+specVersion: alpha
+kind: YaRD
+name: 'Merge'
+inputs:
+  - name: Jira 1
+    type: Store
+  - name: Jira 2
+    type: Store
+elements:
+  - name: Merged data from two ticket streams
+    type: Decision
+    logic:
+      type: Rules
+      result: List
+      rules:
+        - when:
+            - given: $ticket
+              from: Jira 1
+              having:
+                - status == "Blocking"
+          then:
+            result:
+              - add: $ticket
+        - when:
+            - given: $ticket2
+              from: Jira 2
+              having:
+                - status == "Blocking"
+          then:
+            result:
+              - add: $ticket2
