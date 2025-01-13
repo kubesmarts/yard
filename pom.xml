@@ -10,7 +10,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.kie.yard</groupId>
+    <groupId>org.kubesmarts.yard</groupId>
     <artifactId>yard-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -18,8 +18,7 @@
     <name>YaRD</name>
     <description>YaRD</description>
 
-    <url>http://drools.org</url>
-    <inceptionYear>2022</inceptionYear>
+    <inceptionYear>2024</inceptionYear>
     <organization>
         <name>JBoss by Red Hat</name>
         <url>http://www.jboss.org/</url>
@@ -34,17 +33,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/kiegroup/yard.git</connection>
-        <developerConnection>scm:git:git@github.com:kiegroup/yard.git</developerConnection>
-        <url>https://github.com/kiegroup/yard</url>
+        <connection>scm:git:https://github.com/kubesmarts/yard.git</connection>
+        <developerConnection>scm:git:git@github.com:kubesmarts/yard.git</developerConnection>
+        <url>https://github.com/kubesmarts/yard</url>
     </scm>
-
-    <developers>
-        <developer>
-            <name>All developers are listed in the KIE GitHub organization</name>
-            <url>https://github.com/orgs/kiegroup/people</url>
-        </developer>
-    </developers>
 
     <properties>
 
